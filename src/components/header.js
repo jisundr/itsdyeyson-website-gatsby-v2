@@ -1,5 +1,5 @@
 import React from "react"
-import { Link, useStaticQuery, graphql, navigate } from "gatsby"
+import { useStaticQuery, graphql, navigate } from "gatsby"
 import PropTypes from "prop-types"
 import clsx from "clsx"
 import HeaderMenuItem from "./header-menu-item"
