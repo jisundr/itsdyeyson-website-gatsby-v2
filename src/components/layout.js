@@ -22,7 +22,10 @@ const Layout = ({ children, site }) => {
         onCollapseMenuClick={site.setCollapseMenu}
       />
       <main>{children}</main>
-      <footer className="container text-sm">{`Crafted with <3 by @itsdyeyson`}</footer>
+      <footer className="w-full text-center bg-primary text-gray-400 p-6 text-xs">
+        <span className="block">Crafted with ♥ by @itsdyeyson</span>
+        <span>Made with Gatsby and TailwindCSS</span>
+      </footer>
     </>
   )
 }
