@@ -1,21 +1,39 @@
-import React from "react"
-import { Link } from "gatsby"
+import React, { useEffect, useContext } from "react"
+// import { Link } from "gatsby"
 
 import Layout from "../components/layout"
-import Image from "../components/image"
+// import Image from "../components/image"
 import SEO from "../components/seo"
+import HeaderSection from "./landing/header-section"
+import SiteContext from "../context/SiteContext"
+import AboutSection from "./landing/about-section"
+import ProjectSection from "./landing/project-section"
+import ContactSection from "./landing/contact-section"
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
-    </div>
-    <Link to="/page-2/">Go to page 2</Link>
-  </Layout>
-)
+const IndexPage = () => {
+  const site = useContext(SiteContext)
+  const handleScroll = () => {
+    const scrollPositionY = window.scrollY
+    if (scrollPositionY >= 100) {
+      site.setShowHeader(true)
+    } else if (scrollPositionY < 100) {
+      site.setShowHeader(false)
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll)
+  })
+
+  return (
+    <Layout site={site}>
+      <SEO title={site.title} />
+      <HeaderSection />
+      <AboutSection />
+      <ProjectSection />
+      <ContactSection />
+    </Layout>
+  )
+}
 
 export default IndexPage
