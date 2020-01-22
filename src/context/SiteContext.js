@@ -1,8 +1,12 @@
 import React, { useState } from "react"
 
 const defaultState = {
+  title: false,
+  setTitle: () => {},
   showHeader: false,
   setShowHeader: () => {},
+  collapsMenu: true,
+  setCollapseMenu: () => {},
 }
 
 const SiteContext = React.createContext(defaultState)

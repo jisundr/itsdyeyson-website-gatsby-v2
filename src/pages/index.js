@@ -26,7 +26,7 @@ const IndexPage = () => {
   })
 
   return (
-    <Layout site={site}>
+    <Layout>
       <SEO title={site.title} />
       <HeaderSection />
       <AboutSection />

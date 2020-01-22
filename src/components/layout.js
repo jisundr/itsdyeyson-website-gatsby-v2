@@ -5,13 +5,15 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import React from "react"
+import React, { useContext } from "react"
 import PropTypes from "prop-types"
 
+import SiteContext from "../context/SiteContext"
 import Header from "./header"
 import "../scss/global.scss"
 
-const Layout = ({ children, site }) => {
+const Layout = ({ children }) => {
+  const site = useContext(SiteContext)
   return (
     <>
       <Header
@@ -32,7 +34,6 @@ const Layout = ({ children, site }) => {
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
-  site: PropTypes.object.isRequired,
 }
 
 export default Layout
