@@ -27,7 +27,7 @@ const Header = ({
 
   const handleCollapseMenuClick = () => onCollapseMenuClick(!collapseMenu)
   const handleMenuLinkNavigate = target => {
-    onCollapseMenuClick(!collapseMenu)
+    onCollapseMenuClick(true)
     navigate(target)
   }
 
