@@ -34,7 +34,7 @@ const Header = ({
   const headerClassName = clsx("w-full bg-transparent block h-auto", {
     "fixed top-0": fixed,
     hidden: !showHeader,
-    "bg-white text-primary": theme === "dark" || !collapseMenu,
+    "bg-white text-primary border-b": theme === "dark" || !collapseMenu,
     "h-screen": !collapseMenu,
   })
 
