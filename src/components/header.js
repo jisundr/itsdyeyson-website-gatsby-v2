@@ -1,8 +1,7 @@
 import React from "react"
-import { useStaticQuery, graphql, navigate } from "gatsby"
+import { Link, useStaticQuery, graphql } from "gatsby"
 import PropTypes from "prop-types"
 import clsx from "clsx"
-import HeaderMenuItem from "./header-menu-item"
 
 const Header = ({
   theme,
@@ -26,10 +25,7 @@ const Header = ({
   `)
 
   const handleCollapseMenuClick = () => onCollapseMenuClick(!collapseMenu)
-  const handleMenuLinkNavigate = target => {
-    onCollapseMenuClick(true)
-    navigate(target)
-  }
+  const handleMenuLinkNavigate = () => onCollapseMenuClick(true)
 
   const headerClassName = clsx("w-full bg-transparent block h-auto", {
     "fixed top-0": fixed,
@@ -51,27 +47,38 @@ const Header = ({
     { hidden: collapseMenu }
   )
 
+  const isActive = ({ href, location }) => ({
+    className: clsx("block mt-4 lg:inline-block lg:mr-4 mx-auto", {
+      "font-bold": href === [location.pathname, location.hash].join(""),
+    }),
+  })
+
   const menuContent = (
     <div className="text-sm lg:flex-grow">
-      <HeaderMenuItem onNavigate={handleMenuLinkNavigate} to="/">
+      <Link to="/" getProps={isActive} onClick={handleMenuLinkNavigate}>
         HOME
-      </HeaderMenuItem>
-      <HeaderMenuItem onNavigate={handleMenuLinkNavigate} to="/#about-section">
+      </Link>
+      <Link
+        to="/#about-section"
+        getProps={isActive}
+        onClick={handleMenuLinkNavigate}
+      >
         ABOUT
-      </HeaderMenuItem>
-      <HeaderMenuItem
-        onNavigate={handleMenuLinkNavigate}
+      </Link>
+      <Link
         to="/#project-section"
+        getProps={isActive}
+        onClick={handleMenuLinkNavigate}
       >
         PROJECTS
-      </HeaderMenuItem>
-      <HeaderMenuItem
-        onNavigate={handleMenuLinkNavigate}
+      </Link>
+      <Link
+        className="inline-block text-sm px-4 py-2 leading-none border border-transparent rounded-full mt-4 lg:mt-0 bg-teal-500 text-white hover:bg-teal-600 hover:border-white font-bold"
         to="/#contact-section"
-        className="inline-block text-sm px-4 py-2 leading-none border border-transparent rounded-full mt-4 lg:mt-0 bg-teal-500 text-white hover:bg-teal-600 hover:border-white"
+        onClick={handleMenuLinkNavigate}
       >
         SAY HI!
-      </HeaderMenuItem>
+      </Link>
     </div>
   )
 
@@ -79,11 +86,7 @@ const Header = ({
     <header className={headerClassName}>
       <nav className="container flex justify-between mx-auto p-6">
         <div className="flex items-center flex-shrink-0 mr-6">
-          <HeaderMenuItem
-            className="m-0"
-            onNavigate={handleMenuLinkNavigate}
-            to="/"
-          >
+          <Link className="m-0" onClick={handleMenuLinkNavigate} to="/">
             <img
               className="h-5"
               src={
@@ -91,7 +94,7 @@ const Header = ({
               }
               alt="logo"
             />
-          </HeaderMenuItem>
+          </Link>
         </div>
         <div className="block lg:hidden">
           <button
