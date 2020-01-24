@@ -10,6 +10,7 @@ import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Formik, Form } from "formik"
 import * as Yup from "yup"
+import Recaptcha from "react-google-recaptcha"
 import TextInput from "../../components/forms/text-input"
 import TextAreaInput from "../../components/forms/textarea-input"
 
