@@ -43,7 +43,7 @@ const Header = ({
   )
 
   const menuContainerClassName = clsx(
-    "container flex justify-center items-center text-center mx-auto  lg:hidden",
+    "container flex justify-center items-center text-center mx-auto lg:hidden",
     { hidden: collapseMenu }
   )
 

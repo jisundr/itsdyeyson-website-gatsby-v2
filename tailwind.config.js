@@ -1,5 +1,9 @@
 module.exports = {
   theme: {
+    fontFamily: {
+      heading: ["Nunito"],
+      body: ["Open Sans"],
+    },
     extend: {
       colors: {
         primary: "#011627",

@@ -11,6 +11,9 @@ const HeaderSection = () => {
       bg: file(relativePath: { eq: "header-bg.jpg" }) {
         publicURL
       }
+      me: file(relativePath: { eq: "me.jpg" }) {
+        publicURL
+      }
     }
   `)
 
@@ -28,6 +31,24 @@ const HeaderSection = () => {
           collapseMenu={site.collapseMenu}
           onCollapseMenuClick={site.setCollapseMenu}
         />
+        <div
+          className="flex justify-center items-center py-20"
+          style={{ height: "calc(100vh - 80px)" }}
+        >
+          <div className="text-center">
+            <img
+              src={data.me.publicURL}
+              className="rounded-full h-32 md:h-56 mb-12 mx-auto"
+              alt="Jayson De los Reyes"
+            />
+            <h2 className="font-body text-sm md:text-xl line leading-relaxed">
+              My Name is Jayson
+            </h2>
+            <h1 className="font-heading font-bold text-xl md:text-4xl leading-relaxed">
+              I AM A WEB DEVELOPER
+            </h1>
+          </div>
+        </div>
       </section>
     </>
   )
