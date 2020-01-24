@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useRef } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import {
   faFacebookSquare,
@@ -14,7 +14,6 @@ import TextInput from "../../components/forms/text-input"
 import TextAreaInput from "../../components/forms/textarea-input"
 
 const RECAPTCHA_KEY = process.env.GATSBY_SITE_RECAPTCHA_KEY
-console.log("RECAPTCHA_KEY", RECAPTCHA_KEY)
 
 const contactFormValidationSchema = Yup.object().shape({
   name: Yup.string().required("Please enter your name"),
@@ -31,6 +30,7 @@ const encode = data => {
 }
 
 const ContactSection = () => {
+  const recaptchaRef = useRef(null)
   const data = useStaticQuery(graphql`
     query {
       bg: file(relativePath: { eq: "contact-bg.jpg" }) {
@@ -40,9 +40,15 @@ const ContactSection = () => {
   `)
 
   const handleFormSubmit = values => {
+    const recaptchaValue =
+      (recaptchaRef &&
+        recaptchaRef.current &&
+        recaptchaRef.current.getValue()) ||
+      null
+
     const data = {
       "form-name": "contact",
-      // "g-recaptcha-response": recaptchaValue,
+      "g-recaptcha-response": recaptchaValue,
       ...values,
     }
 
@@ -90,7 +96,7 @@ const ContactSection = () => {
                   className="w-full"
                   onSubmit={handleSubmit}
                   data-netlify="true"
-                  // data-netlify-recaptcha="true"
+                  data-netlify-recaptcha="true"
                   data-netlify-honeypot="bot-field"
                   noValidate
                 >
@@ -128,9 +134,9 @@ const ContactSection = () => {
                       />
                     </div>
 
-                    {/* <div className="w-full px-3 mb-6 md:mb-8 ">
+                    <div className="w-full px-3 mb-6 md:mb-8 ">
                       <Recaptcha ref={recaptchaRef} sitekey={RECAPTCHA_KEY} />
-                    </div> */}
+                    </div>
 
                     <div className="w-full px-3 mb-4 lg:mb-0">
                       <button
