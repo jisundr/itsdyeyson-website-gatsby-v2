@@ -1,5 +1,9 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
+@tailwind base;
+@tailwind utilities;
+@tailwind components;
+
 @import "tailwindcss/utilities";
+@import "~react-notifications-component/dist/scss/notification";
+@import "~animate.css/animate.css";
 
 @import "./custom.scss";

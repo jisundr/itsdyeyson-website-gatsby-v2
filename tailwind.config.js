@@ -10,6 +10,9 @@ module.exports = {
       },
     },
   },
-  variants: {},
+  variants: {
+    opacity: ["disabled"],
+    cursor: ["disabled"],
+  },
   plugins: [],
 }

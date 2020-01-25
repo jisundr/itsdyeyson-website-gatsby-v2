@@ -1,3 +1,59 @@
 html {
   scroll-behavior: smooth;
 }
+
+body {
+  @apply w-full;
+}
+
+.btn {
+  @apply inline-block py-3 px-6;
+  @apply leading-none font-semibold bg-white text-gray-800;
+  @apply border border-gray-400 rounded;
+
+  &:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+
+  &:not(:disabled):hover {
+    @apply bg-gray-100;
+  }
+}
+
+.btn-cta {
+  @apply rounded-full;
+  @apply bg-teal-500 text-white;
+  @apply border-transparent;
+
+  &:not(:disabled):hover {
+    @apply bg-teal-600;
+    @apply border-white;
+  }
+}
+
+.btn-primary {
+  @apply rounded-full;
+  @apply bg-teal-500 text-white;
+
+  &:not(:disabled):hover {
+    @apply bg-teal-600;
+  }
+}
+
+.nav {
+  @apply flex justify-between items-center;
+
+  &.nav-title {
+    @apply flex items-center flex-shrink-0 mr-6;
+
+    &.a {
+      @apply m-0;
+    }
+  }
+}
+
+// contact-section
+// inline-block text-sm p-4 leading-none border border-transparent rounded-full mt-4 lg:mt-0 bg-teal-500 text-center text-white hover:bg-teal-600 hover:border-white w-full lg:w-auto disabled:opacity-50 disabled:cursor-not-allowed
+
+// header
+// inline-block text-sm px-4 py-2 leading-none border border-transparent rounded-full mt-4 lg:mt-0 bg-teal-500 text-white hover:bg-teal-600 hover:border-white font-bold

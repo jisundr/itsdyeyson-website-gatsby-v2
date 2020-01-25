@@ -9,6 +9,7 @@ import React, { useContext } from "react"
 import PropTypes from "prop-types"
 
 import SiteContext from "../context/SiteContext"
+import ReactNotification from "react-notifications-component"
 import Header from "./header"
 import "../scss/global.scss"
 
@@ -16,6 +17,7 @@ const Layout = ({ children }) => {
   const site = useContext(SiteContext)
   return (
     <>
+      <ReactNotification />
       <Header
         theme="dark"
         fixed

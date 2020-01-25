@@ -73,7 +73,7 @@ const Header = ({
         PROJECTS
       </Link>
       <Link
-        className="inline-block text-sm px-4 py-2 leading-none border border-transparent rounded-full mt-4 lg:mt-0 bg-teal-500 text-white hover:bg-teal-600 hover:border-white font-bold"
+        className="btn btn-cta"
         to="/#contact-section"
         onClick={handleMenuLinkNavigate}
       >
@@ -84,9 +84,9 @@ const Header = ({
 
   return (
     <header className={headerClassName}>
-      <nav className="container flex justify-between mx-auto p-6">
-        <div className="flex items-center flex-shrink-0 mr-6">
-          <Link className="m-0" onClick={handleMenuLinkNavigate} to="/">
+      <nav className="container mx-auto p-6 nav">
+        <div className="nav-title">
+          <Link onClick={handleMenuLinkNavigate} to="/">
             <img
               className="h-5"
               src={
@@ -96,7 +96,7 @@ const Header = ({
             />
           </Link>
         </div>
-        <div className="block lg:hidden">
+        <div className="nav-menu block lg:hidden">
           <button
             className={menuButtonClassName}
             onClick={handleCollapseMenuClick}

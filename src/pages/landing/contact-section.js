@@ -1,4 +1,4 @@
-import React, { useRef } from "react"
+import React, { useRef, useState } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import {
   faFacebookSquare,
@@ -6,11 +6,13 @@ import {
   faGithubSquare,
   faLinkedinIn,
 } from "@fortawesome/free-brands-svg-icons"
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
+import { faEnvelope, faSpinner } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Formik, Form } from "formik"
 import * as Yup from "yup"
+import { store } from "react-notifications-component"
 import Recaptcha from "react-google-recaptcha"
+
 import TextInput from "../../components/forms/text-input"
 import TextAreaInput from "../../components/forms/textarea-input"
 
@@ -32,6 +34,7 @@ const encode = data => {
 
 const ContactSection = () => {
   const recaptchaRef = useRef(null)
+  const [loading, setLoading] = useState(false)
   const data = useStaticQuery(graphql`
     query {
       bg: file(relativePath: { eq: "contact-bg.jpg" }) {
@@ -41,6 +44,8 @@ const ContactSection = () => {
   `)
 
   const handleFormSubmit = values => {
+    setLoading(true)
+    recaptchaRef.current.execute()
     const recaptchaValue =
       (recaptchaRef &&
         recaptchaRef.current &&
@@ -58,8 +63,23 @@ const ContactSection = () => {
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: encode(data),
     })
-      .then(() => alert("Success!"))
+      .then(() => {
+        recaptchaRef.current.reset()
+        store.addNotification({
+          title: "Message Sent",
+          message: "Great! Thank you for contacting me.",
+          type: "success",
+          insert: "top",
+          container: "top-center",
+          animationIn: ["animated", "fadeIn"],
+          animationOut: ["animated", "fadeOut"],
+          dismiss: {
+            duration: 4000,
+          },
+        })
+      })
       .catch(error => alert(error))
+      .finally(() => setLoading(false))
   }
 
   return (
@@ -135,16 +155,22 @@ const ContactSection = () => {
                       />
                     </div>
 
-                    <div className="w-full px-3 mb-6 md:mb-8 ">
-                      <Recaptcha ref={recaptchaRef} sitekey={RECAPTCHA_KEY} />
-                    </div>
+                    <Recaptcha
+                      ref={recaptchaRef}
+                      size="invisible"
+                      sitekey={RECAPTCHA_KEY}
+                    />
 
                     <div className="w-full px-3 mb-4 lg:mb-0">
                       <button
                         type="submit"
-                        className="inline-block text-sm p-4 leading-none border border-transparent rounded-full mt-4 lg:mt-0 bg-teal-500 text-white hover:bg-teal-600 hover:border-white w-full lg:w-auto"
+                        disabled={loading}
+                        className="btn btn-primary w-full lg:w-auto"
                       >
-                        Send Message
+                        {(loading && (
+                          <FontAwesomeIcon icon={faSpinner} spin />
+                        )) ||
+                          `Send Message`}
                       </button>
                     </div>
                   </div>

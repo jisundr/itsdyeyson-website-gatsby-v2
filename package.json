@@ -9,6 +9,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.12.0",
     "@fortawesome/free-solid-svg-icons": "^5.12.0",
     "@fortawesome/react-fontawesome": "^0.1.8",
+    "animate.css": "^3.7.2",
     "clsx": "^1.0.4",
     "formik": "^2.1.2",
     "gatsby": "^2.18.12",
@@ -27,10 +28,12 @@
     "react-dom": "^16.12.0",
     "react-google-recaptcha": "^2.0.1",
     "react-helmet": "^5.2.1",
+    "react-notifications-component": "^2.2.7",
     "yup": "^0.28.0"
   },
   "devDependencies": {
     "prettier": "^1.19.1",
+    "stylelint-config-recommended": "^3.0.0",
     "tailwindcss": "^1.1.4"
   },
   "keywords": [
