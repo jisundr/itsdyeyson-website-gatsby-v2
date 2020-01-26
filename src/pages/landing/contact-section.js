@@ -18,6 +18,7 @@ import useIntersectionObserver from "@react-hook/intersection-observer"
 import TextInput from "../../components/forms/text-input"
 import TextAreaInput from "../../components/forms/textarea-input"
 import SiteContext from "../../context/SiteContext"
+import clsx from "clsx"
 
 const RECAPTCHA_KEY = process.env.GATSBY_SITE_RECAPTCHA_KEY
 
@@ -58,6 +59,7 @@ const ContactSection = () => {
   if (entry.isIntersecting && currentAnchor !== "#contact-section") {
     updateCurrentAnchor()
   }
+
   const handleFormSubmit = values => {
     setLoading(true)
     recaptchaRef.current.execute()
@@ -96,6 +98,10 @@ const ContactSection = () => {
       .catch(error => alert(error))
       .finally(() => setLoading(false))
   }
+
+  const recaptchaClassName = clsx("block", {
+    invisible: currentAnchor !== "#contact-section",
+  })
 
   return (
     <section
@@ -174,11 +180,13 @@ const ContactSection = () => {
                       />
                     </div>
 
-                    <Recaptcha
-                      ref={recaptchaRef}
-                      size="invisible"
-                      sitekey={RECAPTCHA_KEY}
-                    />
+                    <div className={recaptchaClassName}>
+                      <Recaptcha
+                        ref={recaptchaRef}
+                        size="invisible"
+                        sitekey={RECAPTCHA_KEY}
+                      />
+                    </div>
 
                     <div className="w-full px-3 mb-4 lg:mb-0">
                       <button
