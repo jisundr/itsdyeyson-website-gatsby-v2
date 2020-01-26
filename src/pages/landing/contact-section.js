@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react"
+import React, { useRef, useState, useContext } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import {
   faFacebookSquare,
@@ -12,9 +12,11 @@ import { Formik, Form } from "formik"
 import * as Yup from "yup"
 import { store } from "react-notifications-component"
 import Recaptcha from "react-google-recaptcha"
+import useIntersectionObserver from "@react-hook/intersection-observer"
 
 import TextInput from "../../components/forms/text-input"
 import TextAreaInput from "../../components/forms/textarea-input"
+import SiteContext from "../../context/SiteContext"
 
 const RECAPTCHA_KEY = process.env.GATSBY_SITE_RECAPTCHA_KEY
 
@@ -33,6 +35,10 @@ const encode = data => {
 }
 
 const ContactSection = () => {
+  const { currentAnchor, showHeader, ...site } = useContext(SiteContext)
+  const [entry, observerRef] = useIntersectionObserver({
+    threshold: 0.5,
+  })
   const recaptchaRef = useRef(null)
   const [loading, setLoading] = useState(false)
   const data = useStaticQuery(graphql`
@@ -42,6 +48,10 @@ const ContactSection = () => {
       }
     }
   `)
+
+  if (entry.isIntersecting && currentAnchor !== "#contact-section") {
+    site.setCurrentAnchor("#contact-section")
+  }
 
   const handleFormSubmit = values => {
     setLoading(true)
@@ -83,7 +93,11 @@ const ContactSection = () => {
   }
 
   return (
-    <section id="contact-section" className="min-h-screen w-full flex">
+    <section
+      ref={observerRef}
+      id="contact-section"
+      className="min-h-screen w-full flex"
+    >
       <div
         className="w-auto lg:w-1/3 min-h-screen"
         style={{

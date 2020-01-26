@@ -14,15 +14,19 @@ import Header from "./header"
 import "../scss/global.scss"
 
 const Layout = ({ children }) => {
-  const site = useContext(SiteContext)
+  const { showHeader, collapseMenu, currentAnchor, ...site } = useContext(
+    SiteContext
+  )
   return (
     <>
       <ReactNotification />
       <Header
         theme="dark"
         fixed
-        showHeader={site.showHeader}
-        collapseMenu={site.collapseMenu}
+        currentAnchor={currentAnchor}
+        showHeader={showHeader}
+        onShowHeaderClick={site.setShowHeader}
+        collapseMenu={collapseMenu}
         onCollapseMenuClick={site.setCollapseMenu}
       />
       <main>{children}</main>

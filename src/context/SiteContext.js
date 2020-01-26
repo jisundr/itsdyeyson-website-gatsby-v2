@@ -7,6 +7,8 @@ const defaultState = {
   setShowHeader: () => {},
   collapsMenu: true,
   setCollapseMenu: () => {},
+  currentAnchor: false,
+  setCurrentAnchor: () => {},
 }
 
 const SiteContext = React.createContext(defaultState)
@@ -15,6 +17,7 @@ export const SiteProvider = ({ children }) => {
   const [title, setTitle] = useState("Home")
   const [showHeader, setShowHeader] = useState(false)
   const [collapseMenu, setCollapseMenu] = useState(true)
+  const [currentAnchor, setCurrentAnchor] = useState("")
 
   return (
     <SiteContext.Provider
@@ -25,6 +28,8 @@ export const SiteProvider = ({ children }) => {
         setShowHeader,
         collapseMenu,
         setCollapseMenu,
+        currentAnchor,
+        setCurrentAnchor,
       }}
     >
       {children}

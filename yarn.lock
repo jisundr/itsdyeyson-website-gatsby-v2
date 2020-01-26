@@ -1182,6 +1182,19 @@
     react-lifecycles-compat "^3.0.4"
     warning "^3.0.0"
 
+"@react-hook/intersection-observer@^2.0.10":
+  version "2.0.10"
+  resolved "https://registry.yarnpkg.com/@react-hook/intersection-observer/-/intersection-observer-2.0.10.tgz#17644dbae132e106498b6fb0c44d6218d4d1d5cd"
+  integrity sha512-vUMVDZtIeXlFrSfqBV4y7nBXyJ5BPrvs4XeaQdAoLo5FjrGgXg3zP9tEhAB/dwMzcOixD3ULkAthQECc4xisvw==
+  dependencies:
+    "@react-hook/passive-layout-effect" "^1.0.2"
+    intersection-observer "^0.7.0"
+
+"@react-hook/passive-layout-effect@^1.0.2":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@react-hook/passive-layout-effect/-/passive-layout-effect-1.0.3.tgz#55faac3bce2ad2b4a12eb0c6a52903da32fdc006"
+  integrity sha512-VFUvBBSYWRigI/YhMRp28tncMWYVgzsUdmdIdZyJ3CpKgj5sLmm4RmJdIoKIfWO/WRX5XQ+83GW2E6VmqTHZ3g==
+
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
@@ -6706,6 +6719,11 @@ internal-ip@^4.3.0:
   dependencies:
     default-gateway "^4.2.0"
     ipaddr.js "^1.9.0"
+
+intersection-observer@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/intersection-observer/-/intersection-observer-0.7.0.tgz#ee16bee978db53516ead2f0a8154b09b400bbdc9"
+  integrity sha512-Id0Fij0HsB/vKWGeBe9PxeY45ttRiBmhFyyt/geBdDHBYNctMRTE3dC1U3ujzz3lap+hVXlEcVaB56kZP/eEUg==
 
 into-stream@^3.1.0:
   version "3.1.0"

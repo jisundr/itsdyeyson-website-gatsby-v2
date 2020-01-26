@@ -7,7 +7,9 @@ const Header = ({
   theme,
   fixed,
   showHeader,
+  currentAnchor,
   collapseMenu,
+  onShowHeaderClick,
   onCollapseMenuClick,
 }) => {
   const data = useStaticQuery(graphql`
@@ -25,7 +27,12 @@ const Header = ({
   `)
 
   const handleCollapseMenuClick = () => onCollapseMenuClick(!collapseMenu)
-  const handleMenuLinkNavigate = () => onCollapseMenuClick(true)
+  const handleMenuLinkNavigate = () => {
+    onCollapseMenuClick(true)
+    if (fixed) {
+      onShowHeaderClick(true)
+    }
+  }
 
   const headerClassName = clsx("w-full bg-transparent block h-auto", {
     "fixed top-0": fixed,
@@ -47,11 +54,14 @@ const Header = ({
     { hidden: collapseMenu }
   )
 
-  const isActive = ({ href, location }) => ({
-    className: clsx("block mt-4 lg:inline-block lg:mr-4 mx-auto", {
-      "font-bold": href === [location.pathname, location.hash].join(""),
-    }),
-  })
+  const isActive = ({ href }) => {
+    console.log("currentAnchor", currentAnchor)
+    return {
+      className: clsx("block mt-4 lg:inline-block lg:mr-4 mx-auto", {
+        "font-bold": `/${currentAnchor}` === href,
+      }),
+    }
+  }
 
   const menuContent = (
     <div className="text-sm lg:flex-grow">
@@ -122,16 +132,19 @@ const Header = ({
 
 Header.propTypes = {
   theme: PropTypes.oneOf(["default", "dark"]),
+  currentAnchor: PropTypes.string.isRequired,
   fixed: PropTypes.bool,
   showHeader: PropTypes.bool,
   collapseMenu: PropTypes.bool.isRequired,
   onCollapseMenuClick: PropTypes.func.isRequired,
+  onShowHeaderClick: PropTypes.func,
 }
 
 Header.defaultProps = {
   fixed: false,
-  showHeader: true,
   theme: "default",
+  showHeader: true,
+  onShowHeaderClick: () => {},
 }
 
 export default Header

@@ -1,7 +1,19 @@
-import React from "react"
+import React, { useContext } from "react"
 import { useStaticQuery, graphql } from "gatsby"
+import useIntersectionObserver from "@react-hook/intersection-observer"
+
+import SiteContext from "../../context/SiteContext"
 
 const AboutSection = () => {
+  const { currentAnchor, showHeader, ...site } = useContext(SiteContext)
+  const [entry, observerRef] = useIntersectionObserver({
+    threshold: 0.25,
+  })
+
+  if (entry.isIntersecting && currentAnchor !== "#about-section") {
+    site.setCurrentAnchor("#about-section")
+  }
+
   const data = useStaticQuery(graphql`
     query {
       ociLogo: file(relativePath: { eq: "oci-logo.png" }) {
@@ -27,7 +39,11 @@ const AboutSection = () => {
   `)
 
   return (
-    <section id="about-section" className="min-h-screen bg-white">
+    <section
+      ref={observerRef}
+      id="about-section"
+      className="min-h-screen bg-white"
+    >
       <div className="container mx-auto px-6 py-10 md:py-20">
         <div className="w-auto pb-10 md:pb-20">
           <h1 className="font-heading text-xl md:text-4xl text-center">

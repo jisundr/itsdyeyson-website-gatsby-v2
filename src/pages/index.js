@@ -1,8 +1,7 @@
-import React, { useEffect, useContext } from "react"
-// import { Link } from "gatsby"
+import React, { useContext } from "react"
 
-import Layout from "../components/layout"
 // import Image from "../components/image"
+import Layout from "../components/layout"
 import SEO from "../components/seo"
 import HeaderSection from "./landing/header-section"
 import SiteContext from "../context/SiteContext"
@@ -11,19 +10,8 @@ import ProjectSection from "./landing/project-section"
 import ContactSection from "./landing/contact-section"
 
 const IndexPage = () => {
-  const site = useContext(SiteContext)
-  const handleScroll = () => {
-    const scrollPositionY = window.scrollY
-    if (scrollPositionY >= 100) {
-      site.setShowHeader(true)
-    } else if (scrollPositionY < 100) {
-      site.setShowHeader(false)
-    }
-  }
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll)
-  })
+  const { currentAnchor, ...site } = useContext(SiteContext)
+  console.log("currentAnchor", currentAnchor)
 
   return (
     <Layout>

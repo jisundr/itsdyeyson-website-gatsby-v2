@@ -1,7 +1,14 @@
-import React from "react"
+import React, { useContext } from "react"
 import { useStaticQuery, graphql } from "gatsby"
+import useIntersectionObserver from "@react-hook/intersection-observer"
+
+import SiteContext from "../../context/SiteContext"
 
 const ProjectSection = () => {
+  const { currentAnchor, showHeader, ...site } = useContext(SiteContext)
+  const [entry, observerRef] = useIntersectionObserver({
+    threshold: 0.75,
+  })
   const data = useStaticQuery(graphql`
     query {
       coffee: file(relativePath: { eq: "coffee.png" }) {
@@ -10,8 +17,13 @@ const ProjectSection = () => {
     }
   `)
 
+  if (entry.isIntersecting && currentAnchor !== "#project-section") {
+    site.setCurrentAnchor("#project-section")
+  }
+
   return (
     <section
+      ref={observerRef}
       id="project-section"
       className="h-screen bg-primary text-white"
       style={{
