@@ -11,7 +11,6 @@ import ContactSection from "./landing/contact-section"
 
 const IndexPage = () => {
   const { currentAnchor, ...site } = useContext(SiteContext)
-  console.log("currentAnchor", currentAnchor)
 
   return (
     <Layout>

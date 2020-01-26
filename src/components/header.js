@@ -55,7 +55,6 @@ const Header = ({
   )
 
   const isActive = ({ href }) => {
-    console.log("currentAnchor", currentAnchor)
     return {
       className: clsx("block mt-4 lg:inline-block lg:mr-4 mx-auto", {
         "font-bold": `/${currentAnchor}` === href,
