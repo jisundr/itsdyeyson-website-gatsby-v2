@@ -6,6 +6,7 @@ import {
   faGithubSquare,
   faLinkedinIn,
 } from "@fortawesome/free-brands-svg-icons"
+import _debounce from "lodash.debounce"
 import { faEnvelope, faSpinner } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Formik, Form } from "formik"
@@ -49,10 +50,14 @@ const ContactSection = () => {
     }
   `)
 
-  if (entry.isIntersecting && currentAnchor !== "#contact-section") {
-    site.setCurrentAnchor("#contact-section")
-  }
+  const updateCurrentAnchor = _debounce(
+    () => site.setCurrentAnchor("#contact-section"),
+    100
+  )
 
+  if (entry.isIntersecting && currentAnchor !== "#contact-section") {
+    updateCurrentAnchor()
+  }
   const handleFormSubmit = values => {
     setLoading(true)
     recaptchaRef.current.execute()

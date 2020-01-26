@@ -1,5 +1,6 @@
 import React, { useContext } from "react"
 import { useStaticQuery, graphql } from "gatsby"
+import _debounce from "lodash.debounce"
 import useIntersectionObserver from "@react-hook/intersection-observer"
 
 import SiteContext from "../../context/SiteContext"
@@ -9,9 +10,13 @@ const AboutSection = () => {
   const [entry, observerRef] = useIntersectionObserver({
     threshold: 0.25,
   })
+  const updateCurrentAnchor = _debounce(
+    () => site.setCurrentAnchor("#about-section"),
+    100
+  )
 
   if (entry.isIntersecting && currentAnchor !== "#about-section") {
-    site.setCurrentAnchor("#about-section")
+    updateCurrentAnchor()
   }
 
   const data = useStaticQuery(graphql`

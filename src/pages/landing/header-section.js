@@ -1,5 +1,6 @@
 import React, { useContext } from "react"
 import { useStaticQuery, graphql } from "gatsby"
+import _debounce from "lodash.debounce"
 import useIntersectionObserver from "@react-hook/intersection-observer"
 
 import SiteContext from "../../context/SiteContext"
@@ -23,14 +24,16 @@ const HeaderSection = () => {
     }
   `)
 
+  const updateCurrentAnchor = _debounce(() => site.setCurrentAnchor(""), 100)
+
+  if (entry.isIntersecting && currentAnchor !== "") {
+    updateCurrentAnchor()
+  }
+
   if (entry.isIntersecting && showHeader) {
     site.setShowHeader(false)
   } else if (!entry.isIntersecting && !showHeader) {
     site.setShowHeader(true)
-  }
-
-  if (entry.isIntersecting && currentAnchor !== "") {
-    site.setCurrentAnchor("")
   }
 
   return (

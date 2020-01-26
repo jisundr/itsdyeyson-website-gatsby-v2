@@ -1,6 +1,7 @@
 import React, { useContext } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import useIntersectionObserver from "@react-hook/intersection-observer"
+import _debounce from "lodash.debounce"
 
 import SiteContext from "../../context/SiteContext"
 
@@ -17,8 +18,13 @@ const ProjectSection = () => {
     }
   `)
 
+  const updateCurrentAnchor = _debounce(
+    () => site.setCurrentAnchor("#project-section"),
+    100
+  )
+
   if (entry.isIntersecting && currentAnchor !== "#project-section") {
-    site.setCurrentAnchor("#project-section")
+    updateCurrentAnchor()
   }
 
   return (
