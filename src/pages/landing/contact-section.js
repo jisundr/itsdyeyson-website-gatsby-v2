@@ -14,6 +14,7 @@ import * as Yup from "yup"
 import { store } from "react-notifications-component"
 import Recaptcha from "react-google-recaptcha"
 import useIntersectionObserver from "@react-hook/intersection-observer"
+import axios from "axios"
 
 import TextInput from "../../components/forms/text-input"
 import TextAreaInput from "../../components/forms/textarea-input"
@@ -75,11 +76,12 @@ const ContactSection = () => {
       ...values,
     }
 
-    fetch("/", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: encode(data),
-    })
+    axios
+      .post("/", encode(data), {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      })
       .then(() => {
         recaptchaRef.current.reset()
         store.addNotification({

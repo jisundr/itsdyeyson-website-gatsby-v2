@@ -12,6 +12,7 @@
     "@react-hook/intersection-observer": "^2.0.10",
     "@welldone-software/why-did-you-render": "^3.5.0",
     "animate.css": "^3.7.2",
+    "axios": "^0.19.2",
     "clsx": "^1.0.4",
     "formik": "^2.1.2",
     "gatsby": "^2.18.12",
