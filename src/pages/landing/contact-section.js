@@ -38,11 +38,12 @@ const encode = data => {
 }
 
 const ContactSection = () => {
+  const recaptchaRef = useRef(null)
+  const formikRef = useRef(null)
   const { currentAnchor, showHeader, ...site } = useContext(SiteContext)
   const [entry, observerRef] = useIntersectionObserver({
     threshold: 0.5,
   })
-  const recaptchaRef = useRef(null)
   const [loading, setLoading] = useState(false)
   const data = useStaticQuery(graphql`
     query {
@@ -63,7 +64,6 @@ const ContactSection = () => {
 
   const handleFormSubmit = values => {
     setLoading(true)
-    recaptchaRef.current.execute()
     const recaptchaValue =
       (recaptchaRef &&
         recaptchaRef.current &&
@@ -83,13 +83,16 @@ const ContactSection = () => {
         },
       })
       .then(() => {
-        recaptchaRef.current.reset()
+        const initialValues =
+          (formikRef.current && formikRef.current.initialValues) || {}
+        formikRef.current && formikRef.current.resetForm(initialValues)
+        recaptchaRef.current && recaptchaRef.current.reset()
         store.addNotification({
           title: "Message Sent",
           message: "Great! Thank you for contacting me.",
           type: "success",
           insert: "top",
-          container: "top-center",
+          container: "bottom-left",
           animationIn: ["animated", "fadeIn"],
           animationOut: ["animated", "fadeOut"],
           dismiss: {
@@ -141,13 +144,16 @@ const ContactSection = () => {
             </form>
 
             <Formik
+              innerRef={formikRef}
               initialValues={{
                 name: "",
                 email: "",
                 message: "",
               }}
               validationSchema={contactFormValidationSchema}
-              onSubmit={handleFormSubmit}
+              onSubmit={() =>
+                recaptchaRef.current && recaptchaRef.current.execute()
+              }
             >
               {({ values, handleSubmit, handleChange }) => (
                 <Form
@@ -197,6 +203,7 @@ const ContactSection = () => {
                         ref={recaptchaRef}
                         size="invisible"
                         sitekey={RECAPTCHA_KEY}
+                        onChange={handleFormSubmit}
                       />
                     </div>
 
