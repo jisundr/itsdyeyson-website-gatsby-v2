@@ -14,7 +14,6 @@ import * as Yup from "yup"
 import { store } from "react-notifications-component"
 import Recaptcha from "react-google-recaptcha"
 import useIntersectionObserver from "@react-hook/intersection-observer"
-import axios from "axios"
 
 import TextInput from "../../components/forms/text-input"
 import TextAreaInput from "../../components/forms/textarea-input"
@@ -62,46 +61,49 @@ const ContactSection = () => {
     updateCurrentAnchor()
   }
 
-  const handleFormSubmit = values => {
-    setLoading(true)
-    const recaptchaValue =
-      (recaptchaRef &&
-        recaptchaRef.current &&
-        recaptchaRef.current.getValue()) ||
-      null
+  const handleFormSubmit = () => {
+    const values = (formikRef.current && formikRef.current.values) || null
 
-    const data = {
-      "form-name": "contact",
-      "g-recaptcha-response": recaptchaValue,
-      ...values,
-    }
+    if (values) {
+      setLoading(true)
+      const recaptchaValue =
+        (recaptchaRef &&
+          recaptchaRef.current &&
+          recaptchaRef.current.getValue()) ||
+        null
 
-    axios
-      .post("/", encode(data), {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
+      const encodedData = encode({
+        "form-name": "contact",
+        "g-recaptcha-response": recaptchaValue,
+        ...values,
       })
-      .then(() => {
-        const initialValues =
-          (formikRef.current && formikRef.current.initialValues) || {}
-        formikRef.current && formikRef.current.resetForm(initialValues)
-        recaptchaRef.current && recaptchaRef.current.reset()
-        store.addNotification({
-          title: "Message Sent",
-          message: "Great! Thank you for contacting me.",
-          type: "success",
-          insert: "top",
-          container: "bottom-left",
-          animationIn: ["animated", "fadeIn"],
-          animationOut: ["animated", "fadeOut"],
-          dismiss: {
-            duration: 4000,
-          },
+
+      fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encodedData,
+      })
+        .then(() => {
+          const initialValues =
+            (formikRef.current && formikRef.current.initialValues) || {}
+          formikRef.current && formikRef.current.resetForm(initialValues)
+          recaptchaRef.current && recaptchaRef.current.reset()
+          store.addNotification({
+            title: "Message Sent",
+            message: "Great! Thank you for contacting me.",
+            type: "success",
+            insert: "top",
+            container: "bottom-left",
+            animationIn: ["animated", "fadeIn"],
+            animationOut: ["animated", "fadeOut"],
+            dismiss: {
+              duration: 4000,
+            },
+          })
         })
-      })
-      .catch(error => alert(error))
-      .finally(() => setLoading(false))
+        .catch(error => alert(error))
+        .finally(() => setLoading(false))
+    }
   }
 
   const recaptchaClassName = clsx("block", {
@@ -136,7 +138,7 @@ const ContactSection = () => {
 
             <form
               name="contact"
-              method="post"
+              method="POST"
               data-netlify="true"
               data-netlify-honeypot="bot-field"
             >
