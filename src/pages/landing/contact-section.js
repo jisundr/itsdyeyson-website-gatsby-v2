@@ -136,13 +136,10 @@ const ContactSection = () => {
               hello@dyeyson.dev and ~let’s talk.
             </p>
 
-            <form
-              name="contact"
-              method="POST"
-              data-netlify="true"
-              data-netlify-honeypot="bot-field"
-            >
-              <input type="hidden" name="form-name" value="contact" />
+            <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+              <input type="text" name="name" />
+              <input type="email" name="email" />
+              <textarea name="message"></textarea>
             </form>
 
             <Formik
@@ -162,10 +159,9 @@ const ContactSection = () => {
                   className="w-full"
                   onSubmit={handleSubmit}
                   name="contact"
-                  data-netlify="true"
-                  data-netlify-honeypot="bot-field"
                   noValidate
                 >
+                  <input type="hidden" name="form-name" value="contact" />
                   <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full lg:w-1/2 px-3 mb-4 lg:mb-8">
                       <TextInput
