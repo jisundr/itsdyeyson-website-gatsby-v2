@@ -128,6 +128,16 @@ const ContactSection = () => {
               or just say hi, fill-up the form below or send to my e-mail at
               hello@dyeyson.dev and ~let’s talk.
             </p>
+
+            <form
+              name="contact"
+              method="post"
+              data-netlify="true"
+              data-netlify-honeypot="bot-field"
+            >
+              <input type="hidden" name="form-name" value="contact" />
+            </form>
+
             <Formik
               initialValues={{
                 name: "",
@@ -138,14 +148,7 @@ const ContactSection = () => {
               onSubmit={handleFormSubmit}
             >
               {({ values, handleSubmit, handleChange }) => (
-                <Form
-                  className="w-full"
-                  onSubmit={handleSubmit}
-                  data-netlify="true"
-                  data-netlify-recaptcha="true"
-                  data-netlify-honeypot="bot-field"
-                  noValidate
-                >
+                <Form className="w-full" onSubmit={handleSubmit} noValidate>
                   <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full lg:w-1/2 px-3 mb-4 lg:mb-8">
                       <TextInput
